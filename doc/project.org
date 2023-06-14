@@ -1,0 +1,163 @@
+* De-VRM
+Comprendre les consommateurs d'aujourd'hui pour créer les produits qui plairont demain.
+
+** Introduction
+Le projet vise à créer une plateforme sociale dédiée aux consommateurs et aux 
+marques, en développant le concept de V-RM (Vendor Relashionship Management) 
+adossé à la blockchain et au Web3 pour permettre la réappropriation des données
+personnelles des consommateurs.
+
+L'objectif principal est de créer des liens durables et bénéfiques et plus 
+équilibrée entre les marques et les consommateurs favorisant la transparence, la
+confiance et la collaboration mutuelle en rémunérant le consommateur en fonction
+des éléments data qu’il souhaite communiquer aux marques…
+
+"Il est temps pour les clients de reprendre le contrôle de leurs données."
+
+** Prolèmes
+*** Les Marques
+ - Les marques ont du mal à comprendre les consommateurs
+ - Segmentations marketing simplistes et sous-estimation des ascpects humains
+ - La fraude publicitaire sur les réseaux sociaux
+ - Perte de budget open Auction inexpliquée (expl: Nestle perd 13% de son 
+   budget média open auction par an)
+ - Perte de confiances et des interrogation des annonceurs
+
+*** Les Consommateurs
+ - Préoccupation utilisation des données personnelles
+ - Crise économique
+ - Intrusivité de la publicité digitale (expl: 50% des Français ne supportent
+   plus d’être interrompu par de la pub pendant une video, un jeu)
+ - Prise en compte plus rapide de l'évolution des besoins...
+
+** Enjeux
+*** Les Marques
+ - Développer de véritables relations Life Centric avec les consommateurs
+ - Arrêter de considérer le consommateur comme un portefeuille
+ - Comprendre les attentes des consommateurs et développer des produits cohérents
+ - Récompenser les consommateurs
+ - Participer à des uses cases pertinents et mesurables dans le WEB3
+   
+*** Les Consommateurs
+ - Reprendre le contrôle de leur data
+ - Avoir un impact sur les produits des marques
+ - Augmenter leur pouvoir d’achat
+ - S’acculturer au web3
+ - Se constituer une épargne
+
+** La Plateforme De-VRM
+*** Hub Annonceurs
+ - Une plateforme SAAS permettant aux marques d'interagir avec les consommateurs
+   en leur proposant divers contenus (publicité,brand content, focus group,
+   du live shopping..)
+ - Gestion de campagne
+ - Gestion des contenus
+ - Gestion des quiz
+ - Sélection segments d’audiences anonymisé…
+*** Blockchain
+La blockchain offre une infrastructure solide pour le VRM:
+ - Décentralisation
+ - Sécurité des données
+ - Confidentialité et anonymat
+ - Traçabilité et transparence
+ - Confiance et réputation
+
+*** Metaconso
+ - Un gameplay user friendly en 3D
+ - Plus grande sensation d’appartenance à une communauté
+ - Fonction sociale et interactivité entre tous les membres
+ - Room annonceurs
+
+*** Social Token
+ - jeton ERC20 de la plateforme permettant d’obtenir des rewards propre à la PF
+ - financement d’éléments de la plateforme
+
+*** Hub Dataconso
+Au sein du metaverse, les éléments du compte client avec les critères data, un
+dashboard des contenus consommés, des rewards en Sat et en Token de la plateforme
+
+*** NFT
+Carte de membre de la plateforme:
+ - NFT pouvant être acheté, offert selon le statut du consommateur, son ancienneté
+ - Avantages nombreux (contenus suppl, expériences MTV, physique…)
+
+*** Bitcoin
+ - Les contenus proposés par les marques aux consommateurs déclenchent à l’issue
+   d’un quiz permettant de vérifier sa compréhension un reward en Sat
+
+*** DAO
+ - Vote et gouvernance
+ - Discussions et forums communautaires
+ - Récompenses pour la participation
+
+** Proposition de valeur
+*** Les Marques
+Compréhension approfondie des consommateurs : Nous offrons aux marques des
+informations précieuses sur les préférences, les comportements et les attentes
+des consommateurs grâce à l'interaction directe et la participation active des
+utilisateurs sur notre plateforme.
+
+Engagement et interaction authentiques : Nous favorisons une véritable relation
+entre les marques et les consommateurs en créant des expériences personnalisées
+et significatives, en permettant des focus groups d'innovation et en offrant des
+opportunités de dialogue bidirectionnel.
+
+Rétablissement de la confiance : En offrant une rémunération aux consommateurs
+en fonction des données qu'ils choisissent de partager, notre plateforme favorise
+la transparence et la confiance entre les marques et les consommateurs.
+Les marques peuvent ainsi reconstruire la confiance perdue et répondre aux
+interrogations des annonceurs.
+
+*** Les Consommateurs
+Réappropriation et Contrôle total des données personnelles : Nous donnons aux
+consommateurs la possibilité de contrôler leurs propres données en leur
+permettant de choisir les informations qu'ils souhaitent partager, ce qui
+renforce leur confiance et leur sentiment de sécurité.
+
+Rémunération et récompenses : Nous récompensons les utilisateurs en Satoshi pour
+leur participation et leur engagement avec les marques, offrant ainsi une
+opportunité d'augmenter leur pouvoir d'achat, d'investir ou d'échanger leurs
+récompenses contre des chèques-cadeaux.
+
+Impact sur les produits des marques : Les consommateurs ont la possibilité
+d'influencer les produits des marques en participant à des focus groups, en
+donnant leur avis sur des contenus et en participant à des quiz.
+Leurs contributions sont valorisées et prises en compte par les marques.
+
+** Technologie
+** Marché
+"Une opportunité immédiate et à forte croissance…"
+
+Sur une croissance du marché global du WEB3 de près de 45 % d’ici 2032 soit
+$81.9 Milliard selon le cabinet Acumen Research and Consulting.
+
+Un Marché du media qui va continuer de croître d’environ 7% à +$45Milliard
+d’ici 2030.
+
+** Concurrence
+** Business Model
+Plusieurs sources de revenus
+*** Les campagnes pour les marques
+Le hub destiné aux marques est un SAAS accessible en self ou managed service.
+   
+Le model de vente des campagnes est le CPQA (coût par audience qualifiée) qui
+est une mesure de coût d'acquisition d'une audience qualifiée pour un produit
+ou un service particulier. Il est utilisé pour évaluer l'efficacité des
+campagnes de marketing et de vente en mesurant le coût pour atteindre et
+engager un public cible spécifique.
+
+Le CPQA est calculé en divisant le coût total d'une campagne de marketing ou
+de vente par le nombre de membres d'audience qualifiés atteints.
+
+Par exemple, si une campagne coûte 10 000 $ et atteint 1 000 membres d'audience
+qualifiés, le CPQA serait de 10$.
+
+*** Room Marques
+Dans un room du Consoverse, les marques pourront proposer des animations sous
+la forme de jeux, de collections de NFT, d’interactions avec le physique.
+
+*** Partenariat
+*** Affiliation
+
+** Roadmap   
+

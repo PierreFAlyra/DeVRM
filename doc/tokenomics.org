@@ -1,0 +1,38 @@
+* Token Overview:
+   - Token Name: DeVRM
+   - Token Symbol: VRM
+   - Token Standard: ERC-20
+   - Total Supply: 100,000,000 VRM
+   - Initial Token Distribution: 50% for public sale, 20% for team and advisors, 15% for reserve fund, 10% for community and marketing, 5% for private sale
+   - Decimals: 18
+
+* Token Utility:
+   - Use Cases: VRM can be used as a medium of exchange within the project's ecosystem, allowing users to pay for services and access platform features.
+   - Token Economy: VRM is required for participating in the project's decentralized applications (DApps) and for accessing exclusive content.
+   - Token Staking: Users can stake VRM to support governance, earning staking rewards in the process. Staking Rewards = (Staked Token Amount * Staking Rewards Percentage) / Total Token Supply
+   - Governance: VRM holders can participate in governance decisions by voting on proposals and protocol upgrades.
+
+* Token Distribution:
+   - Private Sale: 5,000,000 VRM at a price of 0.001 ETH per VRM, with a 6-month lock-up period.
+   - Public Sale: 50,000,000 VRM available for public sale at a price of 0.002 ETH per VRM.
+   - Team and Advisors: 20,000,000 VRM allocated for the project team and advisors, with a 2-year vesting schedule.
+   - Reserve Fund: 15,000,000 VRM reserved for future development and growth.
+   - Community and Marketing: 10,000,000 VRM allocated for community initiatives and marketing efforts.
+
+* Token Economics:
+   - Token Supply Mechanics: VRM has a fixed supply of 100,000,000 tokens, with no inflation mechanism.
+   - Token Burning: A portion of transaction fees collected in VRM will be periodically burned to reduce token supply.
+   - Token Vesting: Tokens allocated for the team and advisors will be subject to a 2-year vesting schedule to ensure long-term commitment.
+
+* Token Governance:
+   - Voting Mechanism: VRM holders can participate in governance decisions by staking their tokens and voting on proposals using the project's governance platform.
+   - Voting Power: Voting power is determined by the number of VRM tokens held and staked by each participant.
+   - Governance Proposals: Examples of governance proposals include protocol upgrades, fee adjustments, and funding allocations for ecosystem development.
+
+* Token Security:
+   - Audits: The smart contracts governing VRM have undergone multiple security audits by reputable third-party firms to ensure code integrity and protect against vulnerabilities.
+   - Token Security Measures: The project has implemented industry-standard security measures, including multi-signature wallets and regular security assessments.
+
+* Legal Considerations:
+   - Regulatory Compliance: The project complies with all relevant laws and regulations, including KYC/AML requirements.
+   - Token Sale Restrictions: The public sale is open to participants globally, subject to legal restrictions in certain jurisdictions.
