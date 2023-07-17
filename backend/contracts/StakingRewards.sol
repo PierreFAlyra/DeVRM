@@ -4,138 +4,188 @@ pragma solidity 0.8.18;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-error InsufficientAmount(uint256 _amount);
-error TransferFailed(string _desc);
-error InsufficientLockTime(uint256 _remainingTime);
-
 /**
- * @title Staking Contract
- * @dev A contract that allows users to stake ERC20 tokens and earn rewards 
- * based on the staked amount and staking duration.
+ * @title StakingRewards
+ * @dev A contract for staking and earning rewards.
  */
+contract StakingRewards is Ownable {
 
-contract Staking is Ownable {
-    event TokenStaked(address _from, uint256 _amount, uint256 _lockTime);
-    event TokenUnstaked(address _from, uint256 _amount);
-    event RewardClaimed(address _from, uint256 _amount);
+    // Custom error messages
+    error AmountMustBeGreaterThanZero();
+    error InsufficientFund();
+    error RewardRateMustBeGreaterThanZero();
+    error RewardAmountExceedsBalance();
+    error RewardDurationNotFinished();
 
+    // Events
+    event Staked(address indexed account, uint256 amount);
+    event Withdrawn(address indexed account, uint256 amount);
+    event RewardsClaimed(address indexed account, uint256 amount);    
 
-    struct Reward {
-        uint256 balance;
-        uint256 timestamp;
+    // Contracts
+    IERC20 public immutable stakingToken;
+    IERC20 public immutable rewardsToken;
+
+    // Reward Parameters
+    uint public rewardDurationInSecond;
+    uint public rewardFinishTimeInSecond;
+    uint public lastUpdateTime;
+    uint public rewardRatePerSecond;
+    uint public rewardPerTokenStored;
+    mapping(address => uint) public rewardPerTokenPaidOf;
+    mapping(address => uint) public rewardBalanceOf;
+
+    // Staking Information
+    uint public totalStaked;
+    mapping(address => uint) public stakeBalanceOf;
+
+    constructor(address _stakingToken, address _rewardToken) {
+        stakingToken = IERC20(_stakingToken);
+        rewardsToken = IERC20(_rewardToken);
     }
 
-    struct Stake {
-        uint256 balance;
-        uint256 lockTime;
-    }
-        
-    mapping(address => Reward) private rewards;
-    mapping(address => Stake) public stakes;
-
-    IERC20 public immutable stakeToken;
-    IERC20 public immutable rewardToken;
-
-    uint8 public interestRate = 5; // 5%
-    uint256 public lockPeriod = 30 days; // 1 months
-
-    modifier onlyPositiveAmount(uint256 _amount) {
-        if (_amount <= 0) {
-            revert InsufficientAmount(_amount);
+    /**
+     * @dev Set the duration of rewards.
+     * @param _duration The duration of rewards to be set.
+     */
+    function setRewardDuration(uint _duration) external onlyOwner {
+        if (block.timestamp < rewardFinishTimeInSecond) {
+            revert RewardDurationNotFinished();
         }
-        _;
+        rewardDurationInSecond = _duration;
     }
+    
+    /**
+     * @dev Notify the contract of the reward amount to be distributed.
+     * @param _amount The amount of rewards to be distributed.
+     */
+    function notifyRewardAmount(uint _amount) external onlyOwner {
+        updateRewardFor(address(0));
+        
+        if (block.timestamp >= rewardFinishTimeInSecond) {
+            rewardRatePerSecond = _amount / rewardDurationInSecond;
+        } else {
+            uint remainingRewards = (rewardFinishTimeInSecond - block.timestamp) * rewardRatePerSecond;
+            rewardRatePerSecond = (_amount + remainingRewards) / rewardDurationInSecond;
+        }
 
-    modifier updateReward(address _addr) {
-        uint256 rewardBalance = rewards[_addr].balance + _calculateReward(_addr);
-        rewards[_addr] = Reward(rewardBalance, block.timestamp);
-        _;
-    }
-
-    constructor(address _stakeToken, address _rewardToken) {
-        stakeToken = IERC20(_stakeToken);
-        rewardToken = IERC20(_rewardToken);
+        if (rewardRatePerSecond <= 0) {
+            revert RewardRateMustBeGreaterThanZero();
+        }
+        if (rewardRatePerSecond * rewardDurationInSecond >
+            rewardsToken.balanceOf(address(this))) {
+            revert RewardAmountExceedsBalance();
+        }
+        rewardFinishTimeInSecond = block.timestamp + rewardDurationInSecond;
+        lastUpdateTime = block.timestamp;
     }
 
     /**
-     * @dev Sets the interest rate for rewards.
-     * @param _interestRate The new interest rate to be set.
-     */    
-    function setInterestRate(uint8 _interestRate) external onlyOwner {
-        interestRate = _interestRate;
-    }
-
-    /**
-     * @dev Sets the lock period until staker can unstake.
-     * @param _lockPeriod The new lock period to be set.
-     */        
-    function setLockPeriod(uint8 _lockPeriod) external onlyOwner {
-        lockPeriod = _lockPeriod;
-    }
-
-    /**
-     * @dev Stakes ERC20 tokens into the contract.
+     * @dev Stake tokens into the contract.
      * @param _amount The amount of tokens to stake.
      */
-    function stake(uint256 _amount) external
-        onlyPositiveAmount(_amount)
-        updateReward(msg.sender) {
-        
-        stakes[msg.sender].balance += _amount;
-        if (!(stakeToken.transferFrom(msg.sender, address(this), _amount)))
-            revert TransferFailed("Stake");
+    function stakeTokens(uint _amount) external {
+        if (_amount <= 0) {
+            revert AmountMustBeGreaterThanZero();
+        }
 
-        stakes[msg.sender].lockTime = block.timestamp + lockPeriod;        
-        
-        emit TokenStaked(msg.sender,
-                         stakes[msg.sender].balance,
-                         stakes[msg.sender].lockTime);
+        updateRewardFor(msg.sender);
+        stakingToken.transferFrom(msg.sender, address(this), _amount);
+        stakeBalanceOf[msg.sender] += _amount;
+        totalStaked += _amount;
+        emit Staked(msg.sender, _amount);
     }
 
     /**
-     * @dev Unstakes previously staked tokens from the contract.
-     * @param _amount The amount of tokens to unstake.
-     */    
-    function unstake(uint256 _amount) external
-        onlyPositiveAmount(_amount)
-        updateReward(msg.sender) {
-        if (block.timestamp < stakes[msg.sender].lockTime)
-            revert InsufficientLockTime(stakes[msg.sender].lockTime -
-                                        block.timestamp);
+     * @dev Withdraw staked tokens from the contract.
+     * @param _amount The amount of tokens to withdraw.
+     */
+    function withdrawTokens(uint _amount) external {
+        if (_amount <= 0) {
+            revert AmountMustBeGreaterThanZero();
+        }
 
-        stakes[msg.sender].balance -= _amount;
-        if(!(stakeToken.transfer(msg.sender, _amount)))
-            revert TransferFailed("unstake");
+        if (_amount > stakeBalanceOf[msg.sender]) {
+            revert InsufficientFund();
+        }
         
-        emit TokenUnstaked(msg.sender, _amount);
+        updateRewardFor(msg.sender);
+        stakeBalanceOf[msg.sender] -= _amount;
+        totalStaked -= _amount;
+        stakingToken.transfer(msg.sender, _amount);
+        emit Withdrawn(msg.sender, _amount);
     }
 
     /**
-     * @dev Claims the available rewards for the caller.
-     */    
-    function claimReward() external
-        updateReward(msg.sender)
-        onlyPositiveAmount(rewards[msg.sender].balance) {
-
-        uint256 rewardedAmount = rewards[msg.sender].balance;
-        delete rewards[msg.sender];
-
-        if (!(rewardToken.transfer(msg.sender, rewardedAmount)))
-            revert TransferFailed("claimReward");
-        
-        emit RewardClaimed(msg.sender, rewardedAmount);
+     * @dev Claim available rewards for an account.
+     */
+    function claimRewards() external {
+        updateRewardFor(msg.sender);
+        uint rewards = rewardBalanceOf[msg.sender];
+        if (rewards > 0) {
+            rewardBalanceOf[msg.sender] = 0;
+            rewardsToken.transfer(msg.sender, rewards);
+            emit RewardsClaimed(msg.sender, rewards);
+        }
     }
 
     /**
-     * @dev Calculates the rewards for a given address based on their staked
-     * amount and duration.
-     * @param _addr The address for which to calculate the rewards.
-     * @return The calculated rewards amount.
-     */    
-    function _calculateReward(address _addr) private view returns (uint256) {
-        uint256 stakedAmount = stakes[_addr].balance;
-        uint256 stakingDuration = block.timestamp - rewards[_addr].timestamp;
-        
-        return (stakedAmount * stakingDuration * interestRate) / (365 days * 100);
+     * @dev Update the reward information for an account.
+     * @param _account The account for which to update rewards.
+     */
+    function updateRewardFor(address _account) internal {
+        rewardPerTokenStored = rewardPerToken();
+        lastUpdateTime = lastApplicableTime();
+
+        if (_account != address(0)) {
+            rewardBalanceOf[_account] = earnedRewardsFor(_account);
+            rewardPerTokenPaidOf[_account] = rewardPerTokenStored;
+        }
+    }
+
+    /**
+     * @dev Calculate and return the rewards per token.
+     * @return The rewards per token.
+     */
+    function rewardPerToken() public view returns (uint) {
+        if (totalStaked == 0) {
+            return rewardPerTokenStored;
+        }
+
+        uint timeDifference = lastApplicableTime() - lastUpdateTime;
+        uint rewardPerTokenIncrement = (rewardRatePerSecond * timeDifference * 1e18) / totalStaked;
+
+        return rewardPerTokenStored + rewardPerTokenIncrement;
+    }
+
+    /**
+     * @dev Return the last time the reward was applicable.
+     * @return The last applicable time.
+     */
+    function lastApplicableTime() public view returns (uint) {
+        return _min(rewardFinishTimeInSecond, block.timestamp);
+    }
+
+    /**
+     * @dev Calculate the amount of rewards earned by an account.
+     * @param _account The account for which to calculate the rewards.
+     * @return The amount of rewards earned.
+     */
+    function earnedRewardsFor(address _account) public view returns (uint) {
+        uint rewardPerTokenDifference = rewardPerToken() - rewardPerTokenPaidOf[_account];
+        uint earnedIncrement = (stakeBalanceOf[_account] * rewardPerTokenDifference) / 1e18;
+
+        uint totalEarned = earnedIncrement + rewardBalanceOf[_account];
+        return totalEarned;
+    }
+
+    /**
+     * @dev Return the minimum of two numbers.
+     * @param x The first number.
+     * @param y The second number.
+     * @return The minimum of the two numbers.
+     */
+    function _min(uint x, uint y) private pure returns (uint) {
+        return x <= y ? x : y;
     }
 }
