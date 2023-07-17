@@ -19,13 +19,13 @@ export default function Providers({ children }) {
   const { chains, publicClient } = configureChains(
     [hardhat, sepolia],
     [publicProvider()]
-  );
+  )
   
   const { connectors } = getDefaultWallets({
     appName: 'DeVRM',
     projectId: '343b2052aaac644063b8aa68292db12e',
     chains
-  });
+  })
   
   const wagmiConfig = createConfig({
     autoConnect: true,

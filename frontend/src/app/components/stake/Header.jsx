@@ -26,8 +26,8 @@ export default function Header( { selectedIndex, handleTabChange } ) {
         onChange={handleTabChange}
       >
         <TabList>
-          {tabs.map((tab) => (
-            <Tab>
+          {tabs.map((tab, index) => (
+            <Tab key={index}>
               <Stack align="center" direction="row" spacing={2}>
                 {tab.icon}
                 <Text>{tab.text} </Text>
