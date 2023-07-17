@@ -8,6 +8,8 @@
     "@nomicfoundation/hardhat-network-helpers": "^1.0.8",
     "@nomicfoundation/hardhat-toolbox": "^2.0.2",
     "@openzeppelin/test-helpers": "^0.5.16",
-    "eth-gas-reporter": "^0.2.25"
+    "eth-gas-reporter": "^0.2.25",
+    "hardhat-abi-exporter": "^2.10.1",
+    "hardhat-address-exporter": "^0.0.4"
   }
 }

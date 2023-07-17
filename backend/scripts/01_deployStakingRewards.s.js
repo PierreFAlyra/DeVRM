@@ -4,25 +4,33 @@
 const hre = require("hardhat");
 
 async function main() {
-  const stakingTokenTotalSupply = hre.ethers.parseEther("100_000_000_000")
+  const [deployer] = await ethers.getSigners();
+  console.log("Deploying contracts with the account:", deployer.address);
+
+  const stakingTokenTotalSupply = 100_000_000_000
   const stakingToken = await hre.ethers.deployContract(
     "StakingToken", [stakingTokenTotalSupply])
-  await stakingToken.waitForDeployment()
-  console.log(`StakingToken contract deployed to ${stakingToken.target}`)
+  console.log(`StakingToken contract deployed to ${stakingToken.address}`)
 
-  const rewardsTokenTotalSupply = hre.ethers.parseEther("100_000_000_000")
+  const rewardsTokenTotalSupply = 100_000_000_000
   const rewardsToken = await hre.ethers.deployContract(
-    "StakingToken", [rewardsTokenTotalSupply])
-  await rewardsToken.waitForDeployment()
-  console.log(`StakingToken contract deployed to ${rewardsToken.target}`)
+    "RewardsToken", [rewardsTokenTotalSupply])
+  console.log(`RewardsToken contract deployed to ${rewardsToken.address}`)
 
   const stakingRewards = await hre.ethers.deployContract(
-    "StakingRewards", [stakingToken.target, rewardsToken.target])
-  await stakingRewards.waitForDeployment()
-  console.log(`StakingRewards contract deployed to ${stakingRewards.target}`)
+    "StakingRewards", [stakingToken.address, rewardsToken.address])
+  console.log(`StakingRewards contract deployed to ${stakingRewards.address}`)
+
+  await hre.addressExporter.save({
+    StakingToken: stakingToken.address,
+    RewardsToken: rewardsToken.address,
+    StakingRewards: stakingRewards.address
+  })
 }
 
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+main()
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error(error);
+    process.exitCode = 1;
+  });

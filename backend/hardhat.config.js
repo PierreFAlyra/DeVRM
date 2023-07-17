@@ -1,6 +1,11 @@
+const path = require('path');
 require("dotenv").config();
 require("@nomicfoundation/hardhat-toolbox");
 require("@nomiclabs/hardhat-etherscan");
+
+require('hardhat-abi-exporter');
+require("hardhat-address-exporter");
+
 
 const PK = process.env.PK || ""
 const URL_RPC = process.env.URL_RPC || ""
@@ -27,5 +32,16 @@ defaultNetwork: "hardhat",
     apiKey: {
       sepolia: ETHERSCAN
     }
-  }  
+  },
+
+  abiExporter: {
+    path: '../frontend/app/src/app/abis',
+    runOnCompile: true
+  },
+
+  addressExporter: {
+    outDir: path.resolve('../frontend/app/src/app/addresses'),
+    runPrettier: false
+  }
+  
 };
