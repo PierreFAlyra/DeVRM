@@ -1,3 +1,5 @@
+"use client"
+
 import { Flex, Center, Heading, Text, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import Stake from '@/components/stake/Stake'
 import Rewards from '@/components/stake/Rewards'

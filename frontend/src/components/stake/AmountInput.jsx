@@ -1,3 +1,7 @@
+"use client"
+
+import { useContext } from 'react'
+
 import {
   IconButton,
   Input,
@@ -11,10 +15,17 @@ import {
   MenuItem
 } from '@chakra-ui/react'
 
-import { FaEthereum } from "react-icons/fa";
-import { BiSolidDollarCircle } from "react-icons/bi";
+import { FaEthereum } from "react-icons/fa"
+import { BiSolidDollarCircle } from "react-icons/bi"
 
-export default function AmountInput() {
+import { WalletContext } from '@/contexts/WalletContext'
+
+export default function AmountInput( { amount, setAmount, maxValue }) {
+
+  const { isConnected } = useContext(WalletContext)
+
+  const handleChange = (event) => {setAmount(event.target.value)}
+  const handleClick = () => {isConnected && setAmount(maxValue?.formatted)}
 
   return (
     <Flex margin='3'>
@@ -23,6 +34,7 @@ export default function AmountInput() {
           as={IconButton}
           aria-label='Options'
           variant='outline'
+          onChange={null}
         />
         <MenuList>
           <MenuItem icon={<FaEthereum />} />
@@ -34,9 +46,11 @@ export default function AmountInput() {
           type='number'
           min='0'
           placeholder='Amount'
+          value={amount}
+          onChange={handleChange}
         />
         <InputRightElement width='4.5rem'>
-          <Button h='1.75rem' size='sm' onClick={null}>
+          <Button h='1.75rem' size='sm' onClick={handleClick}>
             MAX
           </Button>
         </InputRightElement>

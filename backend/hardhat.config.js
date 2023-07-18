@@ -1,4 +1,3 @@
-const path = require('path');
 require("dotenv").config();
 require("@nomicfoundation/hardhat-toolbox");
 require("@nomiclabs/hardhat-etherscan");
@@ -35,13 +34,8 @@ defaultNetwork: "hardhat",
   },
 
   abiExporter: {
-    path: '../frontend/app/src/app/abis',
+    path: '../frontend/src/app/abis',
     runOnCompile: true
-  },
-
-  addressExporter: {
-    outDir: path.resolve('../frontend/app/src/app/addresses'),
-    runPrettier: false
   }
   
 };

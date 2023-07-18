@@ -1,10 +1,31 @@
-import { Flex, Spacer, Heading, Text, Button } from '@chakra-ui/react'
-import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
+"use client"
+
+import {
+  Flex,
+  Spacer,
+  Heading,
+  Text,
+  Button,
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter  
+} from '@chakra-ui/react'
 
 import AmountInput from '@/components/stake/AmountInput'
 
+import { useContractWrite } from 'wagmi'
+import { addresses } from '@/constants/addresses'
+import abiStakingRewards from '@/abis/contracts/StakingRewards.sol/StakingRewards.json'
+
 export default function Withdrawals() {
-  
+
+  const { isSuccess, isError, write } = useContractWrite({
+    address: addresses.StakingRewards,
+    abi: abiStakingRewards,
+    functionName: "withdrawTokens",
+  })
+
   return (
     <Flex width="100%" direction='column' align='center' justify='center'>
       <Heading size='md'>
@@ -16,10 +37,22 @@ export default function Withdrawals() {
       <Card width="50%">
         <CardBody>
           <Flex direction='column' margin='6'>
-            <AmountInput />
-            <Button colorScheme='twitter' h='3rem' onClick={null}>
+            <AmountInput amount={null} setAmount={null} maxValue={null}/>
+            <Button colorScheme='twitter' width="100%" h='3rem' onClick={null}>
               Submit
             </Button>
+            {isError &&
+             <Alert status='error' width="90%" margin='6'>
+               <AlertIcon />
+               There was an error processing your request
+             </Alert>
+            }
+            {isSuccess &&
+             <Alert status='success' width="90%" margin='6'>
+               <AlertIcon />
+               Congrats! You stake with success
+             </Alert>
+            }
             <Flex>
               <Text pt='2' fontSize='sm'>
                 Max transaction cost

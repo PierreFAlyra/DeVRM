@@ -1,3 +1,5 @@
+"use client"
+
 import { Flex, Spacer, Heading, Text, Input, Button } from '@chakra-ui/react'
 import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
 

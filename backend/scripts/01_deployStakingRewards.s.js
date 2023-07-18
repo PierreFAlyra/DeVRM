@@ -1,6 +1,9 @@
 // You can also run a script with `npx hardhat run <script>`. If you do that, Hardhat
 // will compile your contracts, add the Hardhat Runtime Environment's members to the
 // global scope, and execute the script.
+const path = require('path');
+const fs = require("fs");
+
 const hre = require("hardhat");
 
 async function main() {
@@ -21,11 +24,16 @@ async function main() {
     "StakingRewards", [stakingToken.address, rewardsToken.address])
   console.log(`StakingRewards contract deployed to ${stakingRewards.address}`)
 
-  await hre.addressExporter.save({
-    StakingToken: stakingToken.address,
-    RewardsToken: rewardsToken.address,
-    StakingRewards: stakingRewards.address
-  })
+
+  const outDir = path.resolve('../frontend/src/constants/addresses.js')
+  const data = `export const addresses = {
+  StakingToken: "${stakingToken.address}",
+  RewardsToken: "${rewardsToken.address}",
+  StakingRewards: "${stakingRewards.address}"
+}
+`
+  fs.writeFileSync(outDir, data);
+  
 }
 
 main()

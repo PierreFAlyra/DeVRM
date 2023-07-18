@@ -1,3 +1,5 @@
+"use client"
+
 import { Flex, Spacer, Tab, TabList, Tabs, Stack, Text } from '@chakra-ui/react';
 import { BsLightningCharge } from "react-icons/bs";
 import { GiReceiveMoney } from "react-icons/gi";

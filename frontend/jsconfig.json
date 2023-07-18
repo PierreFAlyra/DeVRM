@@ -2,7 +2,12 @@
   "compilerOptions": {
     "paths": {
       "@/*": ["./src/*"],
-      "@/components/*": ["./src/app/components/*"]
+      "@/abis/*": ["./src/abis/*"],
+      "@/components/*": ["./src/components/*"],
+      "@/constants/*": ["./src/constants/*"],
+      "@/contexts/*": ["./src/contexts/*"],
+      "@/hooks/*": ["./src/hooks/*"],
+      "@/pages/*": ["./src/pages/*"]
     }
   }
 }

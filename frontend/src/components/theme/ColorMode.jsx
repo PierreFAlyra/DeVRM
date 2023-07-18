@@ -1,3 +1,5 @@
+"use client"
+
 import { Button, useColorMode } from '@chakra-ui/react'
 import { WiDaySunny, WiMoonAltWaxingCrescent4 } from "react-icons/wi";
 
