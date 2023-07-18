@@ -1,9 +1,36 @@
 "use client"
 
-import { Flex, Spacer, Heading, Text, Input, Button } from '@chakra-ui/react'
-import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
+import { useContext, useState, useEffect } from 'react'
+
+import {
+  Flex,
+  Spacer,
+  Heading,
+  Text,
+  Input,
+  Button,
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter
+} from '@chakra-ui/react'
+
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+
+import { WalletContext } from '@/contexts/WalletContext'
 
 export default function Rewards() {
+
+  const [address, setAddress] = useState('')
+  const { account, isConnected } = useContext(WalletContext)
+  const handleChange = (event) => {setAddress(event.target.value)}
+
+  useEffect(() => {
+    if (isConnected) {
+      setAddress(account)
+    }
+  }, [isConnected, account])
+  
 
   return (
     <Flex width="100%" direction='column' align='center' justify='center'>
@@ -20,11 +47,18 @@ export default function Rewards() {
               <Input
                 type='text'
                 placeholder='Enter your public address'
+                value={address}
+                onChange={handleChange}
               />
             </Flex>
-            <Button colorScheme='twitter' h='3rem' onClick={null}>
-              Claim
-            </Button>
+            {isConnected ?
+             <Button colorScheme='twitter' h='3rem' onClick={null}>
+               Claim
+             </Button>
+             :
+             <Flex align='center' justify='center'>
+               <ConnectButton />
+             </Flex>}
           </Flex>
         </CardBody>
       </Card>

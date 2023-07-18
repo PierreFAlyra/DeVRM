@@ -25,7 +25,7 @@ export default function AmountInput( { amount, setAmount, maxValue }) {
   const { isConnected } = useContext(WalletContext)
 
   const handleChange = (event) => {setAmount(event.target.value)}
-  const handleClick = () => {isConnected && setAmount(maxValue?.formatted)}
+  const handleClick = () => {isConnected && setAmount(maxValue)}
 
   return (
     <Flex margin='3'>
