@@ -1,6 +1,8 @@
 "use client"
 
 import {
+  Alert,
+  AlertIcon,
   Flex,
   Spacer,
   Heading,
@@ -17,16 +19,18 @@ import AmountInput from '@/components/stake/AmountInput'
 import GasPrice from '@/components/stake/GasPrice'
 
 import { WalletContext } from '@/contexts/WalletContext'
-import { useState, useContext, useMemo, useCallback } from "react"
-import { useContractWrite } from 'wagmi'
-import { useReadStakeBalance } from '@/hooks/useReadStakeBalance'
-import { useWithdrawTokens } from '@/hooks/useWithdrawTokens'
+import { useContext } from "react"
 
-export default function Withdrawals() {
+export default function Withdrawals({
+  withdrawTokens,
+  withdrawSucceed,
+  withdrawFailed,
+  amountWithdrawn,
+  setAmountWithdrawn,
+  stakeRewardsBalance
+}) {
 
   const { isConnected } = useContext(WalletContext)
-  const { amount, setAmount, isSuccess, isError, withdrawTokens } = useWithdrawTokens()
-  const { stakeBalance } = useReadStakeBalance()
 
   return (
     <Flex width="100%" direction='column' align='center' justify='center'>
@@ -40,10 +44,19 @@ export default function Withdrawals() {
         <CardBody>
           <Flex direction='column' margin='6'>
             
-            <AmountInput amount={amount} setAmount={setAmount} maxValue={stakeBalance.toString()}/>
+            <AmountInput
+              amount={amountWithdrawn}
+              setAmount={setAmountWithdrawn}
+              maxValue={stakeRewardsBalance.toString()}
+            />
 
             {isConnected ? (
-              <Button colorScheme='twitter' width="100%" h='3rem' onClick={withdrawTokens}>
+              <Button
+                colorScheme='twitter'
+                width="100%"
+                h='3rem'
+                onClick={withdrawTokens}
+              >
                 Submit
               </Button>
             ) : (
@@ -52,21 +65,21 @@ export default function Withdrawals() {
               </Flex>
             )}
 
-            {isError && (
+            {withdrawFailed && (
               <Alert status='error' width="90%" margin='6'>
                 <AlertIcon />
                 There was an error processing your request
               </Alert>
             )}
 
-            {isSuccess && (
+            {withdrawSucceed && (
               <Alert status='success' width="90%" margin='6'>
                 <AlertIcon />
                 Congrats! You widthdraw with success
               </Alert>
             )}
 
-            <GasPrice />
+            <GasPrice gasAmount='106101'/>
             
           </Flex>       
         </CardBody>

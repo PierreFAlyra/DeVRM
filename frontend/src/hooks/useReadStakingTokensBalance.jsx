@@ -1,5 +1,3 @@
-
-
 import { useState, useContext, useEffect, useCallback } from "react"
 import { WalletContext } from '@/contexts/WalletContext'
 import { readContract } from '@wagmi/core'
@@ -7,20 +5,21 @@ import { readContract } from '@wagmi/core'
 import { addresses } from '@/constants/addresses'
 import abiStakingToken from '@/abis/contracts/StakingToken.sol/StakingToken.json'
 
-export const useReadAllowance = (stakeSucceed, setAllowance) => {
-
-  const { account, isConnected } = useContext(WalletContext)
-
-  const getAllowance =  useCallback(async () => {
+export const useReadStakingTokensBalance = (stakeSucceed, withdrawSucceed) => {
+  
+  const { isConnected, account } = useContext(WalletContext)
+  const [stakingTokensBalance, setStakingTokensBalance] = useState(0)
+  
+  const getStakingTokensBalance =  useCallback(async () => {
     if (isConnected) {
       try {
         const data = await readContract({
           address: addresses.StakingToken,
           abi: abiStakingToken,
-          functionName: 'allowance',
-          args: [account, addresses.StakingRewards]
+          functionName: 'balanceOf',
+          args:[account]
         })
-        setAllowance(data)
+        setStakingTokensBalance(data)
       } catch (err) {
         console.log(err.message)
       }
@@ -28,6 +27,8 @@ export const useReadAllowance = (stakeSucceed, setAllowance) => {
   }, [isConnected, account])
 
   useEffect(() => {
-    getAllowance()
-  }, [getAllowance, stakeSucceed])
+    getStakingTokensBalance()
+  }, [getStakingTokensBalance, stakeSucceed, withdrawSucceed])
+
+  return stakingTokensBalance
 }

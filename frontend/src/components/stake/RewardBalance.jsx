@@ -6,25 +6,22 @@ import {
   Text
 } from '@chakra-ui/react'
 
-import { useReadRewardBalance } from '@/hooks/useReadRewardBalance'
+import { useState, useContext, useEffect, useCallback } from "react"
+import { WalletContext } from '@/contexts/WalletContext'
 
-export default function RewardBalance() {
-
-  const { rewardBalance, isSuccess } = useReadRewardBalance()
+export default function RewardBalance( { rewardBalance } ) {
 
   return (
     <>
-      {isSuccess && (
-        <Flex>
-          <Text pt='2' fontSize='sm'>
-            Reward balance
-          </Text>
-          <Spacer />
-          <Text pt='2' fontSize='sm'>
-            {rewardBalance.toString()}
-          </Text>
-        </Flex>
-      )}
+      <Flex>
+        <Text pt='2' fontSize='sm'>
+          Reward balance
+        </Text>
+        <Spacer />
+        <Text pt='2' fontSize='sm'>
+          {rewardBalance.toString()}
+        </Text>
+      </Flex>
     </>
   )
 }

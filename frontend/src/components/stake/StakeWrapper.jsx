@@ -14,9 +14,9 @@ export default function StakeWrapper() {
   };
 
   return (
-      <Flex direction="column" minHeight="100vh">
-        <Header selectedIndex={selectedIndex}  handleTabChange={handleTabChange} />
-        <Body selectedIndex={selectedIndex}/>
-      </Flex>
-  );
+    <Flex direction="column" minHeight="100vh">
+      <Header selectedIndex={selectedIndex}  handleTabChange={handleTabChange} />
+      <Body selectedIndex={selectedIndex}/>
+    </Flex>
+  )
 }

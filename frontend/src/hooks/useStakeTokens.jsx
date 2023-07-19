@@ -4,28 +4,40 @@ import { parseEther } from 'viem'
 
 import { useContractWrite } from 'wagmi'
 
+import { useReadAllowance } from '@/hooks/useReadAllowance'
+
 import { addresses } from '@/constants/addresses'
 import abiStakingRewards from '@/abis/contracts/StakingRewards.sol/StakingRewards.json'
+import abiStakingToken from '@/abis/contracts/StakingToken.sol/StakingToken.json'
 
-export const useStakeTokens = () => {
+export const useStakeTokens = (amount, allowance) => {
 
-  const [amount, setAmount] = useState(0)
+  const { write: approve, isSuccess: approveSucceed, isError: approveFailed, data: approveData } = useContractWrite({
+    address: addresses.StakingToken,
+    abi: abiStakingToken,
+    functionName: "approve"
+  })
 
-  const { isSuccess, isError, write } = useContractWrite({
+  const { write: stake, isSuccess: stakeSucceed, isError: stakeFailed } = useContractWrite({
     address: addresses.StakingRewards,
     abi: abiStakingRewards,
     functionName: "stakeTokens"
   })
 
   const stakeTokens = useCallback(() => {
-    write({args: [parseEther(amount)]})
-  }, [write, amount])
+    if (allowance < amount) {
+      approve({args: [addresses.StakingRewards, amount]})
+      useWaitForTransaction({ hash: approveData?.hash })
+    }
+    
+    stake({args: [amount]})
+  }, [allowance, amount, approve, stake])
 
   return {
-    amount,
-    setAmount,
-    isSuccess,
-    isError,
-    stakeTokens
+    stakeTokens,
+    approveSucceed,
+    approveFailed,
+    stakeSucceed,
+    stakeFailed,
   }
 }

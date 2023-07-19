@@ -7,11 +7,15 @@ import abiStakingRewards from '@/abis/contracts/StakingRewards.sol/StakingReward
 
 export const useClaimRewards = () => {
 
-  const { isSuccess, isError, write:claimRewards } = useContractWrite({
+  const {
+    isSuccess: claimRewardsSucceed,
+    isError: claimRewardsFailed,
+    write: claimRewards
+  } = useContractWrite({
     address: addresses.StakingRewards,
     abi: abiStakingRewards,
     functionName: "claimRewards"
   })
 
-  return { isSuccess, isError, claimRewards }
+  return { claimRewardsSucceed, claimRewardsFailed, claimRewards }
 }

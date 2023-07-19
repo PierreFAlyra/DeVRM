@@ -27,7 +27,7 @@ export default function RewardRate() {
           </Text>
           <Spacer />
           <Text pt='2' fontSize='sm'>
-            {data.toString()* 31_536_000}%
+            {data.toString() * 31_536_000 * 100}%
           </Text>      
         </Flex>
       )}

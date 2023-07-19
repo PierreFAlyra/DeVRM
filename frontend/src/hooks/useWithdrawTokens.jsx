@@ -5,26 +5,25 @@ import { useContractWrite } from 'wagmi'
 import { addresses } from '@/constants/addresses'
 import abiStakingRewards from '@/abis/contracts/StakingRewards.sol/StakingRewards.json'
 
-export const useWithdrawTokens = () => {
+export const useWithdrawTokens = (amount) => {
 
-  const [amount, setAmount] = useState(0)
-  const { isSuccess, isError, write } = useContractWrite(
-    {
-      address: addresses.StakingRewards,
-      abi: abiStakingRewards,
-      functionName: "withdrawTokens"
-    }
-  )
+  const {
+    isSuccess: withdrawSucceed,
+    isError: withdrawFailed,
+    write: widthraw
+  } = useContractWrite({
+    address: addresses.StakingRewards,
+    abi: abiStakingRewards,
+    functionName: "withdrawTokens"
+  })
 
   const withdrawTokens = useCallback(() => {
-    write({args: [parseEther(amount)]})
-  }, [write, amount])
+    widthraw({args: [amount]})
+  }, [widthraw, amount])
 
   return {
-    amount,
-    setAmount,
-    isSuccess,
-    isError,
-    withdrawTokens
+    withdrawTokens,
+    withdrawSucceed,
+    withdrawFailed
   }
 }

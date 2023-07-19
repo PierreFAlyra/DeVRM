@@ -16,8 +16,6 @@ import {
 import { useContext } from "react"
 import { WalletContext } from '@/contexts/WalletContext'
 
-import { useStakeTokens } from '@/hooks/useStakeTokens'
-
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Allowance from '@/components/stake/Allowance'
 import AmountInput from '@/components/stake/AmountInput'
@@ -25,11 +23,19 @@ import GasPrice from '@/components/stake/GasPrice'
 import RewardRate from '@/components/stake/RewardRate'
 import TotalStaked from '@/components/stake/TotalStaked'
 
-export default function Stake() {
+export default function Stake({
+  stakeTokens,
+  stakeSucceed,
+  stakeFailed,
+  amountStaked,
+  setAmountStaked,
+  stakingTokensBalance,
+  allowance,
+  totalStaked,
+  totalStakedSucceed
+}) {
 
-  const { isConnected, balance } = useContext(WalletContext)
-
-  const { amount, setAmount, isSuccess, isError, stakeTokens } = useStakeTokens()
+  const { isConnected } = useContext(WalletContext)
 
   return (
     <Flex width="100%" direction='column' align='center' justify='center'>
@@ -42,7 +48,11 @@ export default function Stake() {
       <Card width="50%">
         <CardBody>
           <Flex direction='column' margin='6'>
-            <AmountInput amount={amount} setAmount={setAmount} maxValue={balance?.formatted}/>
+            <AmountInput
+              amount={amountStaked}
+              setAmount={setAmountStaked}
+              maxValue={stakingTokensBalance.toString()}
+            />
 
             {isConnected ? (
               <Button colorScheme='twitter' width="100%" h='3rem' onClick={stakeTokens}>
@@ -54,24 +64,27 @@ export default function Stake() {
               </Flex>
             )}
             
-            {isError && (
+            {stakeFailed && (
               <Alert status='error' width="90%" margin='6'>
                 <AlertIcon />
                 There was an error processing your request
               </Alert>
             )}
             
-            {isSuccess && (
+            {stakeSucceed && (
               <Alert status='success' width="90%" margin='6'>
                 <AlertIcon />
                 Congrats! You stake with success
               </Alert>
             )}
             
-            <Allowance />
-            <GasPrice />
+            <Allowance allowance={allowance} />
+            <GasPrice gasAmount='125736'/>
             <RewardRate />
-            <TotalStaked />
+            <TotalStaked
+              totalStaked={totalStaked}
+              totalStakedSucceed={totalStakedSucceed}
+            />
           </Flex>
         </CardBody>
       </Card>

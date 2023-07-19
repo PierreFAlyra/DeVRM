@@ -5,11 +5,14 @@ import { readContract } from '@wagmi/core'
 import { addresses } from '@/constants/addresses'
 import abiStakingRewards from '@/abis/contracts/StakingRewards.sol/StakingRewards.json'
 
-export const useReadRewardBalance = () => {
-  const [rewardBalance, setRewardBalance] = useState(0)
-  const [isSuccess, setIsSuccess] = useState(false)
-  
+export const useReadRewardBalance = ({
+  stakeSucceed,
+  withdrawSucceed,
+  claimRewardsSucceed
+}) => {
+
   const { account, isConnected } = useContext(WalletContext)
+  const [rewardBalance, setRewardBalance] = useState(0)
 
   const getRewardBalance =  useCallback(async () => {
     if (isConnected) {
@@ -21,9 +24,7 @@ export const useReadRewardBalance = () => {
           args:[account]
         })
         setRewardBalance(data)
-        setIsSuccess(true)
       } catch (err) {
-        setIsSuccess(false)
         console.log(err.message)
       }
     }
@@ -31,7 +32,7 @@ export const useReadRewardBalance = () => {
 
   useEffect(() => {
     getRewardBalance()
-  }, [getRewardBalance])
+  }, [getRewardBalance, stakeSucceed, withdrawSucceed])
 
-  return { rewardBalance, isSuccess }
+  return rewardBalance
 }

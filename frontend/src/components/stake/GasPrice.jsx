@@ -8,7 +8,7 @@ import {
 
 import { useFeeData } from 'wagmi'
 
-export default function GasPrice() {
+export default function GasPrice({ gasAmount }) {
 
   const { data, isSuccess } = useFeeData()
 
@@ -17,11 +17,11 @@ export default function GasPrice() {
       {isSuccess && (
         <Flex>
           <Text pt='2' fontSize='sm'>
-            Gas Price
+            Max transaction cost
           </Text>
           <Spacer />
           <Text pt='2' fontSize='sm'>
-            {data?.formatted.gasPrice} WEI
+            {(data?.formatted.gasPrice * gasAmount).toFixed(2)} WEI
           </Text>      
         </Flex>
       )}

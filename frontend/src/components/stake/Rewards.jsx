@@ -19,20 +19,21 @@ import RewardBalance from '@/components/stake/RewardBalance'
 
 import { WalletContext } from '@/contexts/WalletContext'
 import { useContext, useState, useEffect } from 'react'
-import { useClaimRewards } from '@/hooks/useClaimRewards'
 
-export default function Rewards() {
+export default function Rewards({
+  claimRewardsSucceed,
+  claimRewardsFailed,
+  claimRewards,
+  rewardBalance
+}) {
 
-  const [address, setAddress] = useState('')
   const { account, isConnected } = useContext(WalletContext)
-  const { isSuccess, isError, claimRewards } = useClaimRewards()
-  
+  const [address, setAddress] = useState('')
   const handleChange = (event) => {setAddress(event.target.value)}
 
   useEffect(() => {
     isConnected && setAddress(account)
   }, [isConnected, account])
-
 
   return (
     <Flex width="100%" direction='column' align='center' justify='center'>
@@ -67,21 +68,21 @@ export default function Rewards() {
               </Flex>
             )}
             
-            {isSuccess && (
+            {claimRewardsSucceed && (
               <Alert status='success' width="90%" margin='6'>
                 <AlertIcon />
                 Congrats! You withdraw your rewards with success
               </Alert>
             )}
 
-            {isError && (
+            {claimRewardsFailed && (
               <Alert status='error' width="90%" margin='6'>
                 <AlertIcon />
                 There was an error processing your request
               </Alert>
             )}
 
-            <RewardBalance />
+            <RewardBalance rewardBalance={rewardBalance}/>
             
           </Flex>
         </CardBody>
