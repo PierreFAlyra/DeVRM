@@ -4,6 +4,7 @@ require("@nomiclabs/hardhat-etherscan");
 
 require('hardhat-abi-exporter');
 require("hardhat-address-exporter");
+require("hardhat-gas-reporter");
 
 
 const PK = process.env.PK || ""
@@ -26,6 +27,10 @@ defaultNetwork: "hardhat",
   },  
 
   solidity: "0.8.18",
+
+  gasReporter: {
+    enabled: true
+  },
 
   etherscan: {
     apiKey: {
