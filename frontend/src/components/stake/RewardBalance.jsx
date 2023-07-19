@@ -19,7 +19,7 @@ export default function RewardBalance( { rewardBalance } ) {
         </Text>
         <Spacer />
         <Text pt='2' fontSize='sm'>
-          {rewardBalance.toString()}
+          {rewardBalance}
         </Text>
       </Flex>
     </>

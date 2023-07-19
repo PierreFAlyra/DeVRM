@@ -47,7 +47,7 @@ export default function Withdrawals({
             <AmountInput
               amount={amountWithdrawn}
               setAmount={setAmountWithdrawn}
-              maxValue={stakeRewardsBalance.toString()}
+              maxValue={stakeRewardsBalance}
             />
 
             {isConnected ? (

@@ -1,7 +1,5 @@
 import { useState, useCallback } from "react"
 
-import { parseEther } from 'viem'
-
 import { useContractWrite } from 'wagmi'
 
 import { useReadAllowance } from '@/hooks/useReadAllowance'
@@ -9,6 +7,8 @@ import { useReadAllowance } from '@/hooks/useReadAllowance'
 import { addresses } from '@/constants/addresses'
 import abiStakingRewards from '@/abis/contracts/StakingRewards.sol/StakingRewards.json'
 import abiStakingToken from '@/abis/contracts/StakingToken.sol/StakingToken.json'
+
+import { parseEther } from 'viem'
 
 export const useStakeTokens = (amount, allowance) => {
 
@@ -26,11 +26,11 @@ export const useStakeTokens = (amount, allowance) => {
 
   const stakeTokens = useCallback(() => {
     if (allowance < amount) {
-      approve({args: [addresses.StakingRewards, amount]})
+      approve({args: [addresses.StakingRewards, parseEther(amount)]})
       useWaitForTransaction({ hash: approveData?.hash })
     }
     
-    stake({args: [amount]})
+    stake({args: [parseEther(amount)]})
   }, [allowance, amount, approve, stake])
 
   return {

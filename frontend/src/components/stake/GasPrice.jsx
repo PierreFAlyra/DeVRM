@@ -7,6 +7,7 @@ import {
 } from '@chakra-ui/react'
 
 import { useFeeData } from 'wagmi'
+import { formatEther } from 'viem'
 
 export default function GasPrice({ gasAmount }) {
 
@@ -21,7 +22,7 @@ export default function GasPrice({ gasAmount }) {
           </Text>
           <Spacer />
           <Text pt='2' fontSize='sm'>
-            {(data?.formatted.gasPrice * gasAmount).toFixed(2)} WEI
+            ${((formatEther(data?.gasPrice) * gasAmount)*2000).toFixed(2)}
           </Text>      
         </Flex>
       )}

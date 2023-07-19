@@ -16,7 +16,7 @@ export default function Allowance( { allowance } ) {
         </Text>
         <Spacer />
         <Text pt='2' fontSize='sm'>
-          {allowance.toString()}
+          {allowance}
         </Text>
       </Flex>
     </>

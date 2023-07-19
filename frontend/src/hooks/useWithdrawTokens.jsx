@@ -5,6 +5,8 @@ import { useContractWrite } from 'wagmi'
 import { addresses } from '@/constants/addresses'
 import abiStakingRewards from '@/abis/contracts/StakingRewards.sol/StakingRewards.json'
 
+import { parseEther } from 'viem'
+
 export const useWithdrawTokens = (amount) => {
 
   const {
@@ -18,7 +20,7 @@ export const useWithdrawTokens = (amount) => {
   })
 
   const withdrawTokens = useCallback(() => {
-    widthraw({args: [amount]})
+    widthraw({args: [parseEther(amount)]})
   }, [widthraw, amount])
 
   return {

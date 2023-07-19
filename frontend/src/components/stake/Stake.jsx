@@ -51,7 +51,7 @@ export default function Stake({
             <AmountInput
               amount={amountStaked}
               setAmount={setAmountStaked}
-              maxValue={stakingTokensBalance.toString()}
+              maxValue={stakingTokensBalance}
             />
 
             {isConnected ? (
@@ -80,7 +80,10 @@ export default function Stake({
             
             <Allowance allowance={allowance} />
             <GasPrice gasAmount='125736'/>
-            <RewardRate />
+            <RewardRate
+              totalStaked={totalStaked}
+              totalStakedSucceed={totalStakedSucceed}
+            />
             <TotalStaked
               totalStaked={totalStaked}
               totalStakedSucceed={totalStakedSucceed}

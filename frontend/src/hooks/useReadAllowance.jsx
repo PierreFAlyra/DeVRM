@@ -7,6 +7,8 @@ import { readContract } from '@wagmi/core'
 import { addresses } from '@/constants/addresses'
 import abiStakingToken from '@/abis/contracts/StakingToken.sol/StakingToken.json'
 
+import { formatEther } from 'viem'
+
 export const useReadAllowance = (stakeSucceed, setAllowance) => {
 
   const { account, isConnected } = useContext(WalletContext)
@@ -20,7 +22,7 @@ export const useReadAllowance = (stakeSucceed, setAllowance) => {
           functionName: 'allowance',
           args: [account, addresses.StakingRewards]
         })
-        setAllowance(data)
+        setAllowance(formatEther(data))
       } catch (err) {
         console.log(err.message)
       }

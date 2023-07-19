@@ -17,7 +17,7 @@ export default function TotalStaked( { totalStaked, totalStakedSucceed } ) {
           </Text>
           <Spacer />
           <Text pt='2' fontSize='sm'>
-            {totalStaked.toString()}
+            {totalStaked}
           </Text>      
         </Flex>
       )}

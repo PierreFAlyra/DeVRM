@@ -5,6 +5,8 @@ import { readContract } from '@wagmi/core'
 import { addresses } from '@/constants/addresses'
 import abiStakingRewards from '@/abis/contracts/StakingRewards.sol/StakingRewards.json'
 
+import { formatEther } from 'viem'
+
 export const useReadStakeRewardsBalance = (stakeSucceed, withdrawSucceed) => {
 
   const { account, isConnected } = useContext(WalletContext)
@@ -19,7 +21,7 @@ export const useReadStakeRewardsBalance = (stakeSucceed, withdrawSucceed) => {
           functionName: 'stakeBalanceOf',
           args:[account]
         })
-        setStakeRewardsBalance(data)
+        setStakeRewardsBalance(formatEther(data))
       } catch (err) {
         console.log(err.message)
       }
