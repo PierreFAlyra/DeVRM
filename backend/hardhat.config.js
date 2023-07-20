@@ -39,7 +39,7 @@ defaultNetwork: "hardhat",
   },
 
   abiExporter: {
-    path: '../frontend/src/app/abis',
+    path: '../frontend/src/abis',
     runOnCompile: true
   }
   
