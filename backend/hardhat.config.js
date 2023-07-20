@@ -14,7 +14,7 @@ const ETHERSCAN = process.env.ETHERSCAN || ""
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
 defaultNetwork: "hardhat",
-  network: {
+  networks: {
     localhost: {
       url: "http://127.0.0.1:8545",
       chainId: 31337
@@ -24,7 +24,7 @@ defaultNetwork: "hardhat",
       accounts: [`0x${PK}`],
       chainId: 11155111
     }
-  },  
+  },
 
   solidity: "0.8.18",
 
