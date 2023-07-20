@@ -65,6 +65,7 @@ export default function Body( { selectedIndex } ) {
                 allowance={allowance}
                 totalStaked={totalStaked}
                 totalStakedSucceed={totalStakedSucceed}
+                stakeRewardsBalance={stakeRewardsBalance}
               />
             </Center>
           </TabPanel>

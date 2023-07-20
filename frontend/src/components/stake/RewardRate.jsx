@@ -13,46 +13,22 @@ import abiStakingRewards from '@/abis/contracts/StakingRewards.sol/StakingReward
 
 import { formatEther } from 'viem'
 
-export default function RewardRate( { totalStaked, totalStakedSucceed }) {
-
-  const [aprValue, setApr ] = useState(0)
-
-  const {
-    data:rewardRatePerSecond,
-    isSuccess: rewardRatePerSecondSucceed
-  } = useContractRead({
-    address: addresses.StakingRewards,
-    abi: abiStakingRewards,
-    functionName: 'rewardRatePerSecond'
-  })
-
-  useEffect(() => {
-    const apr = () => {
-      if (rewardRatePerSecondSucceed) {
-        console.log(rewardRatePerSecond)
-        const rewardRatePerSecondETH = formatEther(rewardRatePerSecond)
-        if (totalStaked === '0') {
-          return (rewardRatePerSecondETH * 31_536_000 * 100)
-        }
-        return ((rewardRatePerSecondETH * 31_536_000 * 100) / totalStaked)
-      }
-      return 0
-    }
-
-    setApr(apr())
-    
-  }, [totalStaked])
+export default function RewardRate({
+  totalStaked,
+  totalStakedSucceed,
+  stakeRewardsBalance
+}) {
 
   return (
     <>
-      {rewardRatePerSecondSucceed && (
+      {totalStakedSucceed && (
         <Flex>
           <Text pt='2' fontSize='sm'>
-            APR
+            Reward shares
           </Text>
           <Spacer />
           <Text pt='2' fontSize='sm'>
-            {aprValue}%
+            {stakeRewardsBalance/totalStaked * 100}%
           </Text>      
         </Flex>
       )}

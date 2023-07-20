@@ -24,13 +24,15 @@ export const useStakeTokens = (amount, allowance) => {
     functionName: "stakeTokens"
   })
 
-  const stakeTokens = useCallback(() => {
+  const stakeTokens = () => {
+    console.log(allowance)
+    console.log(amount)
     if (allowance < amount) {
       approve({args: [addresses.StakingRewards, parseEther(amount)]})
     } else {
       stake({args: [parseEther(amount)]})
     }
-  }, [allowance, amount, approve, stake])
+  }
 
   return {
     stakeTokens,

@@ -8,15 +8,9 @@ import {
   InputRightElement,
   InputGroup,
   Button,
-  Flex,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem
+  Flex
 } from '@chakra-ui/react'
 
-import { FaEthereum } from "react-icons/fa"
-import { BiSolidDollarCircle } from "react-icons/bi"
 
 import { WalletContext } from '@/contexts/WalletContext'
 
@@ -29,18 +23,6 @@ export default function AmountInput( { amount, setAmount, maxValue }) {
 
   return (
     <Flex margin='3'>
-      <Menu>
-        <MenuButton
-          as={IconButton}
-          aria-label='Options'
-          variant='outline'
-          onChange={null}
-        />
-        <MenuList>
-          <MenuItem icon={<FaEthereum />} />
-          <MenuItem icon={<BiSolidDollarCircle />} />
-        </MenuList>
-      </Menu>
       <InputGroup size='md'>
         <Input
           type='number'

@@ -32,7 +32,8 @@ export default function Stake({
   stakingTokensBalance,
   allowance,
   totalStaked,
-  totalStakedSucceed
+  totalStakedSucceed,
+  stakeRewardsBalance
 }) {
 
   const { isConnected } = useContext(WalletContext)
@@ -79,10 +80,11 @@ export default function Stake({
             )}
             
             <Allowance allowance={allowance} />
-            <GasPrice gasAmount='125736'/>
+            <GasPrice gasAmount={136534*2}/>
             <RewardRate
               totalStaked={totalStaked}
               totalStakedSucceed={totalStakedSucceed}
+              stakeRewardsBalance={stakeRewardsBalance}
             />
             <TotalStaked
               totalStaked={totalStaked}

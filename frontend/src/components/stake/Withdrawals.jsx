@@ -17,6 +17,7 @@ import {
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import AmountInput from '@/components/stake/AmountInput'
 import GasPrice from '@/components/stake/GasPrice'
+import StakeTokenBalance from '@/components/stake/StakeTokenBalance'
 
 import { WalletContext } from '@/contexts/WalletContext'
 import { useContext } from "react"
@@ -79,7 +80,8 @@ export default function Withdrawals({
               </Alert>
             )}
 
-            <GasPrice gasAmount='106101'/>
+            <GasPrice gasAmount={114410*2}/>
+            <StakeTokenBalance stakeRewardsBalance={stakeRewardsBalance} />
             
           </Flex>       
         </CardBody>
