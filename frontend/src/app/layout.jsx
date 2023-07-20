@@ -1,4 +1,6 @@
 "use client"
+import './globals.css'
+import { Inter } from 'next/font/google'
 
 import '@rainbow-me/rainbowkit/styles.css';
 
@@ -13,7 +15,6 @@ import {
 } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 
-import { CacheProvider } from '@chakra-ui/next-js'
 import { ChakraProvider } from '@chakra-ui/react'
 
 import { WalletProvider } from '@/contexts/WalletContext'
@@ -42,13 +43,11 @@ export default function RootLayout({ children }) {
       <body>
         <WagmiConfig config={wagmiConfig}>
           <RainbowKitProvider chains={chains}>
-            <CacheProvider>
-              <ChakraProvider>
-                <WalletProvider>        
-                  {children}
-                </WalletProvider>
-              </ChakraProvider>
-            </CacheProvider>
+            <ChakraProvider>
+              <WalletProvider>        
+                {children}
+              </WalletProvider>
+            </ChakraProvider>
           </RainbowKitProvider>
         </WagmiConfig>
       </body>
