@@ -38,13 +38,14 @@ export default function Header( { selectedIndex, handleTabChange } ) {
           ))}
         </TabList>
       </Tabs>
-      
+
       <Spacer />
       
       <Stack align="center" direction="row" spacing={2}>
-        <ConnectButton chainStatus="none"/>
+        <ConnectButton />
         <ColorMode />
       </Stack>
+      
     </Flex>
   )
 }
