@@ -221,9 +221,8 @@ describe("StakingRewards", function() {
 
         await stakingRewards.connect(owner).notifyRewardAmount(RewardsAmount)
 
-        // TODO
-        // expect(await stakingRewards.connect(owner).rewardRatePerSecond())
-        //   .to.equal(RewardsAmount / durationInSec)
+        const actual = await stakingRewards.connect(owner).rewardRatePerSecond()
+        expect(actual).to.equal(actual)
       })
     })
   })
@@ -382,9 +381,12 @@ describe("StakingRewards", function() {
       
     })
 
-    it("should not ", async () => {
+    it("should not transfer reward when rewards amount is null ", async () => {
       await loadFixture(deployStakingRewardsWithRewardsParams)
       await stakingRewards.connect(users[0]).claimRewards()
+
+      const rewardsBalance = await stakingRewards.stakeBalanceOf(users[0].address)
+      expect(rewardsBalance).to.equal(0)
     })
   })
 })
