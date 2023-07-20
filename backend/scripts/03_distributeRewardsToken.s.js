@@ -3,14 +3,12 @@ const hre = require("hardhat");
 const addresses = require("../../frontend/src/constants/index.js")
 
 async function main() {
-  const signers = await ethers.getSigners();
-  const stakingToken = await hre.ethers.getContractAt("StakingToken", addresses.StakingToken);
 
-  for (let i=1; i < signers.length; i++) {
-    await stakingToken.connect(signers[0])
-      .transfer(signers[i].address, ethers.utils.parseUnits("10","ether"))
-  }
-  
+  const signers = await ethers.getSigners();
+  const rewardsToken = await hre.ethers.getContractAt("RewardsToken", addresses.RewardsToken);
+
+  await rewardsToken.connect(signers[0]).transfer(addresses.StakingRewards, ethers.utils.parseUnits("10000","ether"))
+
 }
 
 main()

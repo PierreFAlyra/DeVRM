@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react"
 
-import { useContractWrite } from 'wagmi'
+import { useContractWrite, useWaitForTransaction } from 'wagmi'
 
 import { useReadAllowance } from '@/hooks/useReadAllowance'
 
@@ -27,10 +27,9 @@ export const useStakeTokens = (amount, allowance) => {
   const stakeTokens = useCallback(() => {
     if (allowance < amount) {
       approve({args: [addresses.StakingRewards, parseEther(amount)]})
-      useWaitForTransaction({ hash: approveData?.hash })
+    } else {
+      stake({args: [parseEther(amount)]})
     }
-    
-    stake({args: [parseEther(amount)]})
   }, [allowance, amount, approve, stake])
 
   return {

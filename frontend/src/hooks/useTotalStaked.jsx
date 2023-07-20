@@ -20,7 +20,8 @@ export const useTotalStaked = (stakeSucceed, withdrawSucceed) => {
   }, [stakeSucceed, withdrawSucceed])
 
   useEffect(() => {
-    totalStakedSucceed && setTotalStaked(formatEther(data))
+    if (totalStakedSucceed)
+      setTotalStaked(formatEther(data))
   }, [data])
 
   return {

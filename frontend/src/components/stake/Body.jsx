@@ -29,7 +29,7 @@ export default function Body( { selectedIndex } ) {
     stakeFailed
   } = useStakeTokens(amountStaked, allowance)
 
-  useReadAllowance(stakeSucceed, setAllowance)
+  useReadAllowance(approveSucceed, approveFailed, stakeSucceed, setAllowance)
 
   const {
     withdrawTokens,

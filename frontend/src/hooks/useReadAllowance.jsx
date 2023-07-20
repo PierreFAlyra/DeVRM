@@ -9,7 +9,7 @@ import abiStakingToken from '@/abis/contracts/StakingToken.sol/StakingToken.json
 
 import { formatEther } from 'viem'
 
-export const useReadAllowance = (stakeSucceed, setAllowance) => {
+export const useReadAllowance = (approveSucceed, approveFailed, stakeSucceed, setAllowance) => {
 
   const { account, isConnected } = useContext(WalletContext)
 
@@ -31,5 +31,5 @@ export const useReadAllowance = (stakeSucceed, setAllowance) => {
 
   useEffect(() => {
     getAllowance()
-  }, [getAllowance, stakeSucceed])
+  }, [getAllowance, approveSucceed, approveFailed, stakeSucceed])
 }

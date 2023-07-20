@@ -34,7 +34,7 @@ export const useReadRewardBalance = ({
 
   useEffect(() => {
     getRewardBalance()
-  }, [getRewardBalance, stakeSucceed, withdrawSucceed])
+  }, [getRewardBalance, stakeSucceed, withdrawSucceed, claimRewardsSucceed])
 
   return rewardBalance
 }
