@@ -41,7 +41,7 @@ const demoAppInfo = {
 };
 
 const wagmiConfig = createConfig({
-  autoConnect: true,
+  autoConnect: false,
   connectors,
   publicClient
 });

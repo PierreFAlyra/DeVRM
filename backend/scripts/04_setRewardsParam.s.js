@@ -13,7 +13,7 @@ async function main() {
   const stakingRewards = await hre.ethers.getContractAt("StakingRewards", addresses.StakingRewards);
 
   const durationInSec = daysToSeconds(10)
-  // await stakingRewards.connect(signers[0]).setRewardDuration(durationInSec)
+  await stakingRewards.connect(signers[0]).setRewardDuration(durationInSec)
 
   const RewardsAmount = 1000 * durationInSec
   await stakingRewards.connect(signers[0]).notifyRewardAmount(RewardsAmount)

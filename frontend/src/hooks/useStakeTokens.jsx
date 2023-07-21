@@ -25,8 +25,6 @@ export const useStakeTokens = (amount, allowance) => {
   })
 
   const stakeTokens = () => {
-    console.log(allowance)
-    console.log(amount)
     if (allowance < amount) {
       approve({args: [addresses.StakingRewards, parseEther(amount)]})
     } else {
