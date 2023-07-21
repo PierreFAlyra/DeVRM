@@ -28,7 +28,7 @@ export default function RewardRate({
           </Text>
           <Spacer />
           <Text pt='2' fontSize='sm'>
-            {stakeRewardsBalance/totalStaked * 100}%
+            {totalStaked > 0 ? stakeRewardsBalance/totalStaked * 100 : 0}%
           </Text>      
         </Flex>
       )}

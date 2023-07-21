@@ -8,21 +8,22 @@ import {
 
 import { useEarnedRewardsFor } from '@/hooks/useEarnedRewardsFor'
 
-export default function RewardBalance( { rewardBalance } ) {
+export default function RewardEarnedFor({ address }) {
 
-  const earnedRewards = useEarnedRewardsFor()
+  const earnedRewards = useEarnedRewardsFor(address)
 
   return (
     <>
       <Flex>
         <Text pt='2' fontSize='sm'>
-          Reward balance
+          Earned For {`${address.substr(0,4)}...${address.substr(-4, 4)}`}
         </Text>
         <Spacer />
         <Text pt='2' fontSize='sm'>
-          {rewardBalance}
+          {earnedRewards}
         </Text>
       </Flex>
     </>
   )
 }
+

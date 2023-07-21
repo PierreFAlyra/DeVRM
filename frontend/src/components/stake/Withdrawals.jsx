@@ -39,7 +39,7 @@ export default function Withdrawals({
         Withdrawals
       </Heading>
       <Text size='sm' mb={3}>
-        Request asset withdrawal and claim ETH/USDC
+        Request asset withdrawal and claim your wBTC
       </Text>
       <Card width="50%">
         <CardBody>

@@ -7,9 +7,9 @@ import abiStakingRewards from '@/abis/contracts/StakingRewards.sol/StakingReward
 
 import { formatEther } from 'viem'
 
-export const useEarnedRewardsFor = () => {
+export const useEarnedRewardsFor = (address) => {
 
-  const { account, isConnected } = useContext(WalletContext)
+  const { isConnected } = useContext(WalletContext)
   const [earnedRewards, setEarnedRewards] = useState(0)
 
   const earnedRewardsFor =  useCallback(async () => {
@@ -19,22 +19,18 @@ export const useEarnedRewardsFor = () => {
           address: addresses.StakingRewards,
           abi: abiStakingRewards,
           functionName: 'earnedRewardsFor',
-          args:[account]
+          args:[address]
         })
         setEarnedRewards(formatEther(data))
       } catch (err) {
         console.log(err.message)
       }
     }
-  }, [isConnected, account])
+  }, [isConnected, address])
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      earnedRewardsFor()
-    }, 1000*30);
-    
-    return () => clearInterval(interval);
-  }, [])
+    earnedRewardsFor()
+  }, [earnedRewardsFor])
 
   return earnedRewards
 }

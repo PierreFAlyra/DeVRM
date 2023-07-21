@@ -31,5 +31,5 @@ export const useReadAllowance = (approveSucceed, approveFailed, stakeSucceed, se
 
   useEffect(() => {
     getAllowance()
-  }, [getAllowance, approveSucceed, approveFailed, stakeSucceed])
+  }, [getAllowance, approveSucceed, approveFailed, stakeSucceed, account, isConnected])
 }

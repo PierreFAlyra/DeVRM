@@ -16,6 +16,7 @@ import {
 } from '@chakra-ui/react'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import RewardBalance from '@/components/stake/RewardBalance'
+import RewardEarnedFor from '@/components/stake/RewardEarnedFor'
 
 import { WalletContext } from '@/contexts/WalletContext'
 import { useContext, useState, useEffect } from 'react'
@@ -29,7 +30,11 @@ export default function Rewards({
 
   const { account, isConnected } = useContext(WalletContext)
   const [address, setAddress] = useState('')
-  const handleChange = (event) => {setAddress(event.target.value)}
+  const handleChange = (event) => {
+    const regex = /^0x[a-fA-F0-9]{40}$/gm
+    if (event.target.value.match(regex))
+      setAddress(event.target.value)
+  }
 
   useEffect(() => {
     isConnected && setAddress(account)
@@ -42,7 +47,7 @@ export default function Rewards({
       </Heading>
       
       <Text size='sm' mb={3}>
-        Track your staking rewards with DeVRM
+        Track your VRM staking rewards
       </Text>
       
       <Card width="50%">
@@ -83,6 +88,7 @@ export default function Rewards({
             )}
 
             <RewardBalance rewardBalance={rewardBalance}/>
+            <RewardEarnedFor address={address}/>
             
           </Flex>
         </CardBody>

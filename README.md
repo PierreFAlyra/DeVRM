@@ -30,8 +30,9 @@ De-VRM is a blockchain-based social platform aiming to foster sustainable and tr
 
 For more details, please refer to the full documentation.
 
-## Link
+## Links
 
-[Staking Dapp deployed on sepolia](https://link-url-here.org)
-[Video Demo](https://link-url-here.org)
+[Staking Dapp deployed on sepolia](https://de-vrm.vercel.app/)
+
+[Video Demo](https://www.loom.com/share/507c70937c0a4eb7840da64ff5d11bea?sid=89695422-b550-4703-a853-6a521f80965a)
 

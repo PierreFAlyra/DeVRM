@@ -12,25 +12,34 @@ import { parseEther } from 'viem'
 
 export const useStakeTokens = (amount, allowance) => {
 
-  const { write: approve, isSuccess: approveSucceed, isError: approveFailed, data: approveData } = useContractWrite({
+  const {
+    write: approve,
+    isSuccess: approveSucceed,
+    isError: approveFailed,
+    data: approveData
+  } = useContractWrite({
     address: addresses.StakingToken,
     abi: abiStakingToken,
     functionName: "approve"
   })
 
-  const { write: stake, isSuccess: stakeSucceed, isError: stakeFailed } = useContractWrite({
+  const {
+    write: stake,
+    isSuccess: stakeSucceed,
+    isError: stakeFailed
+  } = useContractWrite({
     address: addresses.StakingRewards,
     abi: abiStakingRewards,
     functionName: "stakeTokens"
   })
 
-  const stakeTokens = () => {
-    if (allowance < amount) {
+  const stakeTokens = useCallback(() => {
+    if (Number(allowance) < Number(amount)) {
       approve({args: [addresses.StakingRewards, parseEther(amount)]})
     } else {
       stake({args: [parseEther(amount)]})
     }
-  }
+  }, [approve, stake, allowance, amount])
 
   return {
     stakeTokens,

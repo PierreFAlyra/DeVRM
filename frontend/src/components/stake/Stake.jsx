@@ -44,7 +44,7 @@ export default function Stake({
         Stake
       </Heading>
       <Text size='sm' mb={3}>
-        Stake ETH/USDC and receive rewards while staking
+        Stake wBTC and receive rewards while staking
       </Text>
       <Card width="50%">
         <CardBody>
